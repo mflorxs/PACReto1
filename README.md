@@ -2,19 +2,18 @@
 
 Programación Avanzada para Ciberseguridad (PAC) — Fase 1
 
-> ⚠️ **Este README es una plantilla.** Bórrenlo y reescríbanlo con su propia información antes de entregar — no debe quedar ningún texto entre `[corchetes]`.
 
 ## Equipo
 
 | Integrante | Rol / aportación |
 |---|---|
-| [Nombre completo] | [ej. Detección de entorno, módulo Entorno.cpp] |
-| [Nombre completo] | [ej. Manejo de archivos y excepciones] |
-| [Nombre completo] | [ej. Documentación del entorno aislado] |
+| [] | [] |
+| [] | [] |
+| [] | [] |
 
 ## Descripción del proyecto
 
-[Expliquen en 3-5 líneas qué hace su programa: cómo detecta si está en un entorno aislado, qué dato del sistema o de la red utilizan para decidirlo, y qué acción "real" simulan cuando detectan que NO están aislados.]
+
 
 ## Cómo compilar
 
@@ -35,10 +34,10 @@ En Windows, el ejecutable se genera como `diagnostico.exe`.
 ## Comportamiento esperado
 
 **Dentro del entorno aislado:**
-[Describan qué imprime el programa en pantalla y qué queda registrado en el log cuando SÍ detecta aislamiento.]
+
 
 **Fuera del entorno aislado (en otra VM sin aislar, o en su equipo host):**
-[Describan qué imprime el programa en pantalla y qué queda registrado en el log cuando NO detecta aislamiento.]
+
 
 ## Estructura del proyecto
 
