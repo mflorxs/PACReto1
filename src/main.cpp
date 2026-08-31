@@ -9,34 +9,65 @@
  */
 
 #include <iostream>
+#include <string>
+#include <stdexcept>
+
+// Incluimos las cabeceras desarrolladas por el equipo
 #include "Entorno.h"
 #include "Diagnostico.h"
+
 using namespace std;
 
 int main() {
+    cout << "==================================================" << endl;
+    cout << "   HERRAMIENTA DE DIAGNOSTICO DE ENTORNO (C++)   " << endl;
+    cout << "==================================================" << endl;
 
-    cout << "=== Herramienta de diagnostico de entorno ===" << endl;
+    // 1. Uso de memoria dinamica y punteros (Requisito del reto)
+    InfoEntorno* resultado = new InfoEntorno();
 
-    // TODO: llamen a su(s) función(es) de detección de Entorno.h
-    bool aislado = estaEnEntornoAislado();
+    // 2. Recoleccion de datos utilizando las funciones de Entorno.h
+    cout << "\n[+] Recolectando informacion del entorno..." << endl;
+    resultado->datoRed = obtenerDatoDeRed();
+    resultado->datoSistema = obtenerDatoDeSistema();
+    
+    // 3. Verificacion de aislamiento
+    resultado->aislado = estaEnEntornoAislado();
 
-    // TODO: arma la estructura con los datos recolectados
-    InfoEntorno resultado;
-    resultado.aislado = aislado;
-    resultado.detalle = "TODO: describir que se detecto";
-
-    if (aislado) {
-        cout << "Entorno aislado detectado. No se ejecuta la accion real." << endl;
-        // TODO: aqui pueden usar excepciones para bloquear la
-        // accion "real" del programa, tal como se definio en
-        // las instrucciones del reto.
+    // 4. Asignacion del detalle descriptivo segun el analisis
+    if (resultado->aislado) {
+        resultado->detalle = "Se detectaron artefactos/indicadores de virtualizacion en los datos del sistema DMI.";
     } else {
-        cout << "No se detecto aislamiento. Ejecutando accion..." << endl;
-        // TODO: la accion que su equipo decidio simular
+        resultado->detalle = "No se encontraron coincidencia de hipervisores o artefactos de virtualizacion conocidos.";
     }
 
-    // Registro del resultado en archivo (carpeta logs/)
-    registrarResultado(resultado, "logs/diagnostico.log");
+    // 5. Manejo de Excepciones para la accion "real"
+    // (Si detecta entorno aislado, lanza una excepcion y aborta la ejecucion real)
+    try {
+        if (resultado->aislado) {
+            throw runtime_error("ALERTA DE SEGURIDAD: Entorno aislado detectado. Se aborta la ejecucion de la accion real.");
+        }
+
+        cout << "\n[EXITO] Entorno seguro/real confirmado. Ejecutando la accion principal del programa..." << endl;
+
+    } catch (const exception& e) {
+        cout << "\n[EXCEPCION CAPTURADA] " << e.what() << endl;
+    }
+
+    // 6. Registro del diagnostico en el archivo de log (usando Diagnostico.h)
+    cout << "\n[+] Guardando registro de diagnostico en log..." << endl;
+    string rutaLog = "diagnostico.log";
+    
+    // Llamada a la funcion de Diagnostico.h
+    registrarResultado(*resultado, rutaLog);
+
+    // 7. Liberacion de memoria dinamica asignada previamente
+    delete resultado;
+    resultado = nullptr;
+
+    cout << "\n==================================================" << endl;
+    cout << "   DIAGNOSTICO FINALIZADO                         " << endl;
+    cout << "==================================================" << endl;
 
     return 0;
 }
