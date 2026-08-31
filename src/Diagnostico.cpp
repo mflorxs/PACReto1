@@ -15,7 +15,8 @@ using namespace std;
 
 void registrarResultado(const InfoEntorno& info, const string& rutaLog) {
     try {
-        ofstream log(rutaLog, ios::out | ios::app);
+        string rutaCompleta = "logs/" + rutaLog;
+        ofstream log(rutaCompleta, ios::out | ios::app);
 
         // Si el archivo no se pudo abrir, lanzamos una excepción
         // en vez de dejar que el programa falle en silencio.
